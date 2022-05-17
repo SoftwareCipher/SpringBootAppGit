@@ -1,7 +1,7 @@
 package com.springboot.app.service;
 
 import com.springboot.app.repository.UserRepository;
-import com.springboot.app.entities.Person;
+import com.springboot.app.entities.User;
 import com.springboot.app.service.impl.UserServiceInterface;
 import org.springframework.stereotype.Service;
 
@@ -18,19 +18,19 @@ public class UserServiceImpl implements UserServiceInterface {
     }
 
     @Override
-    public List<Person> getAllUsers() {
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
     @Override
-    public void saveOrUpdateUser(Person person) {
+    public void saveOrUpdateUser(User person) {
         userRepository.save(person);
     }
 
     @Override
-    public Person getUser(long id) {
-        Person person = null;
-        Optional<Person> optional = userRepository.findById(id);
+    public User getUser(long id) {
+        User person = null;
+        Optional<User> optional = userRepository.findById(id);
         if(optional.isPresent()){
             person = optional.get();
         }else{

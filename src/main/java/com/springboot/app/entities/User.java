@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(name = "person")
-public class Person {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,10 +21,10 @@ public class Person {
     @Column(name = "phone")
     private long phoneNumber;
 
-    public Person() {
+    public User() {
     }
 
-    public Person(long id, String fio, String email, long phoneNumber) {
+    public User(long id, String fio, String email, long phoneNumber) {
         this.id = id;
         this.fio = fio;
         this.email = email;

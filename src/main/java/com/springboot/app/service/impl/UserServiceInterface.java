@@ -1,15 +1,15 @@
 package com.springboot.app.service.impl;
 
-import com.springboot.app.entities.Person;
+import com.springboot.app.entities.User;
 
 import java.util.List;
 
 public interface UserServiceInterface {
-    List<Person> getAllUsers();
+    List<User> getAllUsers();
 
-    void saveOrUpdateUser(Person person);
+    void saveOrUpdateUser(User person);
 
-    Person getUser(long id);
+    User getUser(long id);
 
     void deleteUser(long id);
 }

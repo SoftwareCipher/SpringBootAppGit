@@ -1,6 +1,6 @@
 package com.springboot.app.controller;
 
-import com.springboot.app.entities.Person;
+import com.springboot.app.entities.User;
 import com.springboot.app.service.impl.UserServiceInterface;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,14 +23,14 @@ public class UserController {
 
     @GetMapping("/persons")
     @ApiOperation("Get all persons")
-    public List<Person> getAllPersons() {
+    public List<User> getAllPersons() {
         return userServiceInterface.getAllUsers();
     }
 
     @GetMapping("/person/{id}")
     @ApiOperation("Save person")
-    public Person getPerson(@PathVariable long id){
-        Person person =  userServiceInterface.getUser(id);
+    public User getPerson(@PathVariable long id){
+        User person =  userServiceInterface.getUser(id);
         if(person == null){
             System.out.println("There is no Person with id = " + id + " in database");
         }
@@ -39,7 +39,7 @@ public class UserController {
 
     @PostMapping("/person")
     @ApiOperation("Save person")
-    public Person savePerson(@RequestBody Person person){
+    public User savePerson(@RequestBody User person){
         userServiceInterface.saveOrUpdateUser(person);
         return person;
     }
@@ -47,7 +47,7 @@ public class UserController {
     @DeleteMapping("/person/{id}")
     @ApiOperation("Delete person by id")
     public String deletePerson(@PathVariable long id){
-        Person person = userServiceInterface.getUser(id);
+        User person = userServiceInterface.getUser(id);
         if(person == null){
             System.out.println("There is no Person with id = " + id + " in database");
         }
