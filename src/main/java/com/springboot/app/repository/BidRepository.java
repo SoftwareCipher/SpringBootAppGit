@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface BidRepository extends JpaRepository<Bid, Long> {
+
     @Query("select b from Bid b where b.status = 'New'")
     List<Bid> packagesWithStatusNew();
+
 }

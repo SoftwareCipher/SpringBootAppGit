@@ -20,17 +20,17 @@ public class NotificationServiceImpl implements NotificationServiceInterface {
     }
 
     @Override
-    public List<Notification> getAllEntities() {
+    public List<Notification> getAllNotifications() {
         return notificationRepository.findAll();
     }
 
     @Override
-    public void saveOrUpdateEntity(Notification T) {
+    public void saveOrUpdateNotification(Notification T) {
         notificationRepository.saveAndFlush(T);
     }
 
     @Override
-    public Notification getEntity(long id) {
+    public Notification getNotification(long id) {
         Notification notification = null;
         Optional<Notification> optional = notificationRepository.findById(id);
         if(optional.isPresent()){
@@ -43,7 +43,7 @@ public class NotificationServiceImpl implements NotificationServiceInterface {
     }
 
     @Override
-    public void deleteEntity(long id) {
+    public void deleteNotification(long id) {
         notificationRepository.deleteById(id);
     }
 }

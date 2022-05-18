@@ -5,11 +5,11 @@ import com.springboot.app.entities.Notification;
 import java.util.List;
 
 public interface NotificationServiceInterface {
-    List<Notification> getAllEntities();
+    List<Notification> getAllNotifications();
 
-    void saveOrUpdateEntity(Notification notification);
+    void saveOrUpdateNotification(Notification notification);
 
-    Notification getEntity(long id);
+    Notification getNotification(long id);
 
-    void deleteEntity(long id);
+    void deleteNotification(long id);
 }

@@ -24,13 +24,13 @@ public class NotificationController {
     @GetMapping("/notifications")
     @ApiOperation("Get all notifications")
     public List<Notification> getAllNotification() {
-        return notificationEntityService.getAllEntities();
+        return notificationEntityService.getAllNotifications();
     }
 
     @GetMapping("/notification/{id}")
     @ApiOperation("Get notification by id")
     public Notification getNotification(@PathVariable long id) {
-        Notification notification = notificationEntityService.getEntity(id);
+        Notification notification = notificationEntityService.getNotification(id);
         if (notification == null) {
             System.out.println("There is no Package with id = " + id + " in database");
         }
@@ -40,7 +40,7 @@ public class NotificationController {
     @PostMapping("/notification")
     @ApiOperation("Save notification")
     public Notification saveNotification(@RequestBody Notification notification) {
-        notificationEntityService.saveOrUpdateEntity(notification);
+        notificationEntityService.saveOrUpdateNotification(notification);
         return notification;
     }
 }

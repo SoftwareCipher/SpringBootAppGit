@@ -33,7 +33,7 @@ public class ParcelProcessor {
         List<Bid> bidList = bidService.packagesWithStatusNew();
         for (int i = 0; i < bidList.size(); i++) {
             long id = bidList.get(i).getId();
-            if (notificationService.getEntity(id).getStatus().equals("new")) {
+            if (notificationService.getNotification(id).getStatus().equals("new")) {
                 LocalTime timeGoods = LocalTime.from(bidService.getBid(id)
                         .getDateCreation());
                 LocalTime newTime = timeGoods.plusHours(3).plusSeconds(5);
@@ -47,14 +47,14 @@ public class ParcelProcessor {
                                                    LocalTime newTimePlusFive, long item) {
         if (now.isBefore(newTimePlusFive)) {
             if (packageStatus()) {
-                notificationService.saveOrUpdateEntity(
+                notificationService.saveOrUpdateNotification(
                         new Notification(item, "Received", "sent"));
             } else {
-                notificationService.saveOrUpdateEntity(
+                notificationService.saveOrUpdateNotification(
                         new Notification(item, "Overdue", "sent"));
             }
         } else {
-            notificationService.saveOrUpdateEntity(
+            notificationService.saveOrUpdateNotification(
                     new Notification(item, "Overdue", "sent"));
         }
     }
