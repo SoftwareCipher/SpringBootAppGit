@@ -2,6 +2,7 @@ package com.springboot.app.controller;
 
 
 import com.springboot.app.entities.Bid;
+import com.springboot.app.exception_handling.NoSuchEntityException;
 import com.springboot.app.service.impl.BidServerInterface;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -33,7 +34,8 @@ public class BidController {
     public Bid getBid(@PathVariable long id){
         Bid bid =  bidServerInterface.getBid(id);
         if(bid == null){
-            System.out.println("There is no Bid with id = " + id + " in database");
+            throw new NoSuchEntityException("There is no Bid with id = " +
+                    id + " in database");
         }
         return bid;
     }
@@ -50,7 +52,8 @@ public class BidController {
     public String deleteBid(@PathVariable long id){
         Bid bid = bidServerInterface.getBid(id);
         if(bid == null){
-            System.out.println("There is no Bid with id = " + id + " in database");
+            throw new NoSuchEntityException("There is no Bid with id = "
+                    + id + " in database");
         }
         bidServerInterface.deleteBid(id);
         return "Bid with id = " + id + " was delete";

@@ -1,6 +1,7 @@
 package com.springboot.app.controller;
 
 import com.springboot.app.entities.User;
+import com.springboot.app.exception_handling.NoSuchEntityException;
 import com.springboot.app.service.impl.UserServiceInterface;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -10,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/personApi")
-@Api(tags = "PersonController", description = "PersonController | Rest questions")
+@RequestMapping("/userApi")
+@Api(tags = "UserController", description = "UserController | Rest questions")
 public class UserController {
 
     UserServiceInterface userServiceInterface;
@@ -21,37 +22,38 @@ public class UserController {
         this.userServiceInterface = userServiceInterface;
     }
 
-    @GetMapping("/persons")
-    @ApiOperation("Get all persons")
+    @GetMapping("/users")
+    @ApiOperation("Get all users")
     public List<User> getAllPersons() {
         return userServiceInterface.getAllUsers();
     }
 
-    @GetMapping("/person/{id}")
-    @ApiOperation("Save person")
+    @GetMapping("/user/{id}")
+    @ApiOperation("Save user")
     public User getPerson(@PathVariable long id){
-        User person =  userServiceInterface.getUser(id);
-        if(person == null){
-            System.out.println("There is no Person with id = " + id + " in database");
+        User user =  userServiceInterface.getUser(id);
+        if(user == null){
+            throw new NoSuchEntityException("There is no User with id = " + id + " in database");
         }
-        return person;
+        return user;
     }
 
-    @PostMapping("/person")
-    @ApiOperation("Save person")
+    @PostMapping("/user")
+    @ApiOperation("Save user")
     public User savePerson(@RequestBody User person){
         userServiceInterface.saveOrUpdateUser(person);
         return person;
     }
 
-    @DeleteMapping("/person/{id}")
-    @ApiOperation("Delete person by id")
+    @DeleteMapping("/user/{id}")
+    @ApiOperation("Delete user by id")
     public String deletePerson(@PathVariable long id){
-        User person = userServiceInterface.getUser(id);
-        if(person == null){
-            System.out.println("There is no Person with id = " + id + " in database");
+        User user = userServiceInterface.getUser(id);
+        if(user == null){
+            throw new NoSuchEntityException("There is no User with id = " +
+                    id + " in database");
         }
         userServiceInterface.deleteUser(id);
-        return "Person with id = " + id + " was delete";
+        return "User with id = " + id + " was delete";
     }
 }

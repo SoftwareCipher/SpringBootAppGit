@@ -1,6 +1,7 @@
 package com.springboot.app.controller;
 
 import com.springboot.app.entities.Notification;
+import com.springboot.app.exception_handling.NoSuchEntityException;
 import com.springboot.app.service.impl.NotificationServiceInterface;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,7 +33,7 @@ public class NotificationController {
     public Notification getNotification(@PathVariable long id) {
         Notification notification = notificationEntityService.getNotification(id);
         if (notification == null) {
-            System.out.println("There is no Package with id = " + id + " in database");
+            throw new NoSuchEntityException("There is no Notification with id = " + id + " in database");
         }
         return notification;
     }

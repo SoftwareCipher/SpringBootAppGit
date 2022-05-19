@@ -1,6 +1,7 @@
 package com.springboot.app.controller;
 
 import com.springboot.app.entities.Department;
+import com.springboot.app.exception_handling.NoSuchEntityException;
 import com.springboot.app.service.impl.DepartmentServiceInterface;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,7 +32,8 @@ public class DepartmentController {
     public Department getDepart(@PathVariable long id){
         Department department =  deleteEntity.getDepartment(id);
         if(department == null){
-            System.out.println("There is no Department with id = " + id + " in database");
+            throw new NoSuchEntityException("There is no Department with id = "
+                    + id + " in database");
         }
         return department;
     }
@@ -48,7 +50,8 @@ public class DepartmentController {
     public String deleteDepartment(@PathVariable long id){
         Department department = deleteEntity.getDepartment(id);
         if(department == null){
-            System.out.println("There is no Department with id = " + id + " in database");
+            throw new NoSuchEntityException("There is no Department with id = "
+                    + id + " in database");
         }
         deleteEntity.deleteDepartment(id);
         return "Department with id = " + id + " was delete";
