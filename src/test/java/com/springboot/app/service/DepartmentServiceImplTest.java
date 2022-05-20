@@ -1,6 +1,7 @@
 package com.springboot.app.service;
 
 import com.springboot.app.entities.Department;
+import com.springboot.app.exception_handling.NoSuchEntityException;
 import com.springboot.app.repository.DepartmentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -71,6 +72,14 @@ class DepartmentServiceImplTest {
         Optional<Department> ofResult = Optional.of(department);
         when(this.departmentRepository.findById((Long) any())).thenReturn(ofResult);
         assertSame(department, this.departmentService.getDepartment(1L));
+        verify(this.departmentRepository).findById((Long) any());
+    }
+
+    @Test
+    void testGetNotification2() {
+        when(this.departmentRepository.findById((Long) any())).thenReturn(Optional.empty());
+        assertThrows(NoSuchEntityException.class, () -> this.departmentService
+                .getDepartment(123L));
         verify(this.departmentRepository).findById((Long) any());
     }
 

@@ -1,6 +1,7 @@
 package com.springboot.app.service;
 
 import com.springboot.app.entities.User;
+import com.springboot.app.exception_handling.NoSuchEntityException;
 import com.springboot.app.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -71,6 +72,14 @@ class UserServiceImplTest {
         Optional<User> ofResult = Optional.of(user);
         when(this.userRepository.findById((Long) any())).thenReturn(ofResult);
         assertSame(user, this.userServiceImpl.getUser(1L));
+        verify(this.userRepository).findById((Long) any());
+    }
+
+    @Test
+    void testGetNotification2() {
+        when(this.userRepository.findById((Long) any())).thenReturn(Optional.empty());
+        assertThrows(NoSuchEntityException.class, () -> this.userServiceImpl
+                .getUser(123L));
         verify(this.userRepository).findById((Long) any());
     }
 

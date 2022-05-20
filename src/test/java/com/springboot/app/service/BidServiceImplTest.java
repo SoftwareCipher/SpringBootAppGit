@@ -2,6 +2,7 @@ package com.springboot.app.service;
 
 import com.springboot.app.entities.Bid;
 import com.springboot.app.entities.Notification;
+import com.springboot.app.exception_handling.NoSuchEntityException;
 import com.springboot.app.repository.BidRepository;
 import com.springboot.app.repository.NotificationRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -103,6 +104,14 @@ class BidServiceImplTest {
         Optional<Bid> ofResult = Optional.of(bid);
         when(this.bidRepository.findById((Long) any())).thenReturn(ofResult);
         assertSame(bid, this.bidServiceImpl.getBid(123L));
+        verify(this.bidRepository).findById((Long) any());
+    }
+
+    @Test
+    void testGetNotification2() {
+        when(this.bidRepository.findById((Long) any())).thenReturn(Optional.empty());
+        assertThrows(NoSuchEntityException.class, () -> this.bidServiceImpl
+                .getBid(123L));
         verify(this.bidRepository).findById((Long) any());
     }
 

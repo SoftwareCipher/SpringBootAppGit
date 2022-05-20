@@ -1,12 +1,14 @@
 package com.springboot.app.entities;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
 
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 @Table(name = "person")
 public class User {
 
@@ -20,9 +22,6 @@ public class User {
     private String email;
     @Column(name = "phone")
     private long phoneNumber;
-
-    public User() {
-    }
 
     public User(long id, String fio, String email, long phoneNumber) {
         this.id = id;

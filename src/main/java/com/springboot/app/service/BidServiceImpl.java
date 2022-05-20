@@ -2,6 +2,7 @@ package com.springboot.app.service;
 
 import com.springboot.app.entities.Bid;
 import com.springboot.app.entities.Notification;
+import com.springboot.app.exception_handling.NoSuchEntityException;
 import com.springboot.app.repository.BidRepository;
 import com.springboot.app.repository.NotificationRepository;
 import com.springboot.app.service.impl.BidServerInterface;
@@ -47,7 +48,8 @@ public class BidServiceImpl implements BidServerInterface {
         if(optional.isPresent()){
             bid = optional.get();
         }else{
-            System.out.println("Исключение");
+            throw new NoSuchEntityException("There is no Bid with id = "
+                    + id + " in database");
         }
         return bid;
     }

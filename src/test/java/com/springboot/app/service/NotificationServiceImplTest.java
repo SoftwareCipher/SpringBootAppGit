@@ -1,6 +1,7 @@
 package com.springboot.app.service;
 
 import com.springboot.app.entities.Notification;
+import com.springboot.app.exception_handling.NoSuchEntityException;
 import com.springboot.app.repository.NotificationRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,12 +16,19 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ContextConfiguration(classes = {NotificationServiceImpl.class})
 @ExtendWith(SpringExtension.class)
 class NotificationServiceImplTest {
+
+    @Autowired
+    private NotificationServiceImpl notificationServiceImpl;
 
     Notification notification;
 
@@ -31,7 +39,7 @@ class NotificationServiceImplTest {
     NotificationServiceImpl notificationService;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         notification = new Notification();
         notification.setId(1);
         notification.setNotification("Execute");
@@ -59,7 +67,7 @@ class NotificationServiceImplTest {
         notification1.setStatus("new");
         this.notificationService.saveOrUpdateNotification(notification1);
         verify(this.notificationRepository).saveAndFlush((Notification) any());
-        assertEquals(1,notification1.getId());
+        assertEquals(1, notification1.getId());
         assertEquals("Execute", notification1.getNotification());
         assertEquals("new", notification1.getStatus());
         assertTrue(this.notificationService.getAllNotifications().isEmpty());
@@ -67,9 +75,17 @@ class NotificationServiceImplTest {
 
     @Test
     void getNotification() {
-        Optional<Notification> ofResult  = Optional.of(notification);
+        Optional<Notification> ofResult = Optional.of(notification);
         when(this.notificationRepository.findById((Long) any())).thenReturn(ofResult);
         assertSame(notification, this.notificationService.getNotification(1));
+        verify(this.notificationRepository).findById((Long) any());
+    }
+
+    @Test
+    void testGetNotification2() {
+        when(this.notificationRepository.findById((Long) any())).thenReturn(Optional.empty());
+        assertThrows(NoSuchEntityException.class, () -> this.notificationServiceImpl
+                .getNotification(123L));
         verify(this.notificationRepository).findById((Long) any());
     }
 

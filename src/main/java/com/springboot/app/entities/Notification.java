@@ -1,12 +1,14 @@
 package com.springboot.app.entities;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
 
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 @Table(name = "notification")
 public class Notification {
 
@@ -18,9 +20,6 @@ public class Notification {
     private String notification;
     @Column(name = "status")
     private String status;
-
-    public Notification() {
-    }
 
     public Notification(long id, String notification, String status) {
         this.id = id;

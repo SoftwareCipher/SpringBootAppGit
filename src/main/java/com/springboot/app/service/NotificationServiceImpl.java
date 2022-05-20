@@ -1,5 +1,6 @@
 package com.springboot.app.service;
 
+import com.springboot.app.exception_handling.NoSuchEntityException;
 import com.springboot.app.repository.NotificationRepository;
 import com.springboot.app.entities.Notification;
 import com.springboot.app.service.impl.NotificationServiceInterface;
@@ -37,7 +38,8 @@ public class NotificationServiceImpl implements NotificationServiceInterface {
             notification = optional.get();
         }
         else{
-            System.out.println("Исключение");
+            throw new NoSuchEntityException("There is no Notification with id = "
+                    + id + " in database");
         }
         return notification;
     }

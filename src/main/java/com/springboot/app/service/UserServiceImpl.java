@@ -1,5 +1,6 @@
 package com.springboot.app.service;
 
+import com.springboot.app.exception_handling.NoSuchEntityException;
 import com.springboot.app.repository.UserRepository;
 import com.springboot.app.entities.User;
 import com.springboot.app.service.impl.UserServiceInterface;
@@ -34,7 +35,8 @@ public class UserServiceImpl implements UserServiceInterface {
         if(optional.isPresent()){
             person = optional.get();
         }else{
-            System.out.println("Исключение");
+            throw new NoSuchEntityException("There is no User with id = "
+                    + id + " in database");
         }
         return person;
     }

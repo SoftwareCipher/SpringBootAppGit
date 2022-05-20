@@ -1,6 +1,7 @@
 package com.springboot.app.entities;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 @Table(name = "pack")
 public class Bid {
 
@@ -35,9 +37,6 @@ public class Bid {
     private LocalDateTime dateCreation;
     @Column(name = "date_change")
     private LocalDateTime dateChange;
-
-    public Bid() {
-    }
 
     public Bid(
             long id,

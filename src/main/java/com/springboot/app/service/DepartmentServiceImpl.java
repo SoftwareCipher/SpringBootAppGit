@@ -1,5 +1,6 @@
 package com.springboot.app.service;
 
+import com.springboot.app.exception_handling.NoSuchEntityException;
 import com.springboot.app.repository.DepartmentRepository;
 import com.springboot.app.entities.Department;
 import com.springboot.app.service.impl.DepartmentServiceInterface;
@@ -36,7 +37,8 @@ public class DepartmentServiceImpl implements DepartmentServiceInterface {
         if(optional.isPresent()){
             department = optional.get();
         }else{
-            System.out.println("Исключение");
+            throw new NoSuchEntityException("There is no Department with id = "
+                    + id + " in database");
         }
         return department;
     }
